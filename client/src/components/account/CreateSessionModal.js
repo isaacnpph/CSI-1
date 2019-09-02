@@ -36,7 +36,12 @@ const CreateSession = ({ createSession }) => {
   };
   return (
     <Fragment>
-      <Button color='green' style={{ marginTop: "0.3rem" }} onClick={e => onClick(e)}>
+      <Button
+        color="green"
+        style={{ marginTop: "0.3rem" }}
+        onClick={e => onClick(e)}
+        inverted
+      >
         Create Session
       </Button>
       <Modal isOpen={modal} toggle={e => onClick(e)}>

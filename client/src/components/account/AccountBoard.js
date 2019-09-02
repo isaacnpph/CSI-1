@@ -1,15 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import {
-  Button,
-  Container,
-  Icon,
-  Message,
-  Grid,
-  Card
-} from "semantic-ui-react";
+import { Container, Message, Grid, Card } from "semantic-ui-react";
 import SessionList from "./SessionList";
 import CreateSessionModal from "./CreateSessionModal";
 import io from "socket.io-client";
@@ -71,22 +63,7 @@ const AccountBoard = ({
   const [message, setMessage] = useState({ visible: true });
 
   return sessions && user === null ? (
-    <Container className="main container">
-      <CreateSessionModal />
-      <Link
-        style={{ marginLeft: "0.3rem", marginTop: "0.3rem" }}
-        to="/edit-personal-details"
-        className="ui button"
-      >
-        Edit Personal Details <Icon name="settings" />
-      </Link>
-      <Button
-        style={{ marginLeft: "0.3rem", marginTop: "0.3rem" }}
-        onClick={() => deleteAccount()}
-      >
-        Delete Account
-      </Button>
-    </Container>
+    <CreateSessionModal />
   ) : (
     <Container className="main container">
       {message.visible && (
@@ -97,7 +74,7 @@ const AccountBoard = ({
           >
             <Message.Header>
               Welcome back{" "}
-              {authentication.user && authentication.user.firstName}
+              {authentication.user && authentication.user.firstName}.
             </Message.Header>
           </Message>
         </Fragment>
@@ -117,7 +94,6 @@ const AccountBoard = ({
               <Card.Content>
                 <Card.Header>Queries: {queries && queries.length}</Card.Header>
                 <Card.Description>Your search history</Card.Description>
-                {queries && <QueryHistoryModal />}
               </Card.Content>
             </Card>
           </Grid.Column>
@@ -126,6 +102,7 @@ const AccountBoard = ({
               <Card.Content>
                 <Card.Description textAlign="center">
                   <CreateSessionModal />
+                  {queries && <QueryHistoryModal />}
                 </Card.Description>
               </Card.Content>
             </Card>

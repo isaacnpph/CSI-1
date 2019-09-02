@@ -32,12 +32,6 @@
   float: right;
 }
 
-.csiModal {
-  top: auto !important;
-  left: auto !important;
-  height: auto !important;
-}
-
 .hero-section {
   background-image: url("images/bg.gif") !important;
   background-size: cover !important;
