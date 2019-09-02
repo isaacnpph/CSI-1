@@ -10,7 +10,6 @@ import { getQueriesByUserId } from "../../actions/queryActions";
 import {
   getCurrentUser,
   getSessions,
-  deleteAccount,
   updateDeleteSession
 } from "../../actions/accountActions";
 import QueryHistoryModal from "./QueryHistoryModal";
@@ -22,7 +21,6 @@ const AccountBoard = ({
   getSessions,
   getQueriesByUserId,
   query: { queries },
-  deleteAccount,
   updateDeleteSession,
   setInitialSocket,
   account: { sessions, loading, user },
@@ -117,8 +115,7 @@ const AccountBoard = ({
 AccountBoard.propTypes = {
   getCurrentUser: PropTypes.func.isRequired,
   getSessions: PropTypes.func.isRequired,
-  getQueriesByUserId: PropTypes.func.isRequired,
-  deleteAccount: PropTypes.func.isRequired
+  getQueriesByUserId: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -134,7 +131,6 @@ export default connect(
     getCurrentUser,
     getSessions,
     getQueriesByUserId,
-    deleteAccount,
     updateDeleteSession,
     setInitialSocket
   }
