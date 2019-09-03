@@ -72,7 +72,7 @@ export default function(state = initialState, action) {
         nextPage: null,
         previousPage: null,
         results: [],
-        loading: false,
+        loading: true,
         chatWindow: false
       };
     case CHAT_OPEN:

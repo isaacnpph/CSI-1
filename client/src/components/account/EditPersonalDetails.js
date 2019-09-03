@@ -11,7 +11,7 @@ import { Link, withRouter } from "react-router-dom";
 import { Button, Container } from "semantic-ui-react";
 
 const EditPersonalDetails = ({
-  account: { loading, user },
+  account: { loading, userDetails },
   editPersonalDetails,
   deleteAccount,
   history
@@ -24,11 +24,11 @@ const EditPersonalDetails = ({
 
   useEffect(() => {
     setFormData({
-      firstName: loading || !user.firstName ? "" : user.firstName,
-      surname: loading || !user.surname ? "" : user.surname,
-      email: loading || !user.email ? "" : user.email
+      firstName: loading || !userDetails.firstName ? "" : userDetails.firstName,
+      surname: loading || !userDetails.surname ? "" : userDetails.surname,
+      email: loading || !userDetails.email ? "" : userDetails.email
     });
-  }, [loading, user]);
+  }, [loading, userDetails]);
 
   const { firstName, surname, email } = formData;
 

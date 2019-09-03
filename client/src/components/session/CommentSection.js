@@ -8,7 +8,7 @@ import Moment from "react-moment";
 import { Button } from "semantic-ui-react";
 
 const CommentSection = ({
-  authentication,
+  account,
   removeComment,
   session,
   searchId,
@@ -16,7 +16,7 @@ const CommentSection = ({
 }) => {
   const [collapse, setCollapse] = useState(false);
 
-  const toggle = e => {
+  const toggle = () => {
     setCollapse(!collapse);
   };
 
@@ -28,13 +28,12 @@ const CommentSection = ({
           <br />
           Posted on: <Moment format="DD/MM/YYYY">{comment.date}</Moment>
         </CardText>
-        {!authentication.loading &&
-          comment.user === authentication.user._id && (
-            <Button
-              icon="trash alternate outline"
-              onClick={() => removeComment(session._id, searchId, comment._id)}
-            />
-          )}
+        {!account.loading && comment.user === account.userDetails._id && (
+          <Button
+            icon="trash alternate outline"
+            onClick={() => removeComment(session._id, searchId, comment._id)}
+          />
+        )}
       </CardBody>
     </Card>
   ));
@@ -61,11 +60,11 @@ CommentSection.propTypes = {
   session: PropTypes.object.isRequired,
   searchId: PropTypes.string.isRequired,
   searchComments: PropTypes.array.isRequired,
-  authentication: PropTypes.object.isRequired
+  account: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  authentication: state.authenticationReducer
+  account: state.accountReducer
 });
 
 export default connect(

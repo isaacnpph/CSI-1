@@ -27,11 +27,11 @@ router.post(
 
     try {
       const session = await Session.findById(req.params.session_id);
-      const user = await User.findById(req.user.id).select("-password");
+      const user = await User.findById(req.user.id);
       const newQuery = new Query({
         addedIn: session.id,
         keyword: req.body.keyword,
-        addedBy: user.firstName
+        addedBy: user._id
       });
 
       const query = await newQuery.save();
@@ -62,9 +62,8 @@ router.get("/session_queries/:session_id", auth, async (req, res) => {
 // @desc   Get queries by user ID
 // @access Private
 router.get("/user", auth, async (req, res) => {
-  const user = await User.findById(req.user.id).select("-password");
   try {
-    const queries = await Query.find({ addedBy: user.firstName });
+    const queries = await Query.find({ addedBy: req.user.id });
     res.json(queries);
   } catch (err) {
     console.error(err.message);

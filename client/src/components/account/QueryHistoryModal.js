@@ -1,6 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { getQueriesByUserId } from "../../actions/queryActions";
+import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
 import Moment from "react-moment";
 import { Button } from "semantic-ui-react";
@@ -12,17 +10,8 @@ import {
   ListGroupItem
 } from "reactstrap";
 import { Link } from "react-router-dom";
-import { getSessionById } from "../../actions/sessionActions";
 
-const QueryHistory = ({
-  getQueriesByUserId,
-  query: { queries },
-  getSessionById
-}) => {
-  useEffect(() => {
-    getQueriesByUserId();
-  }, [getQueriesByUserId]);
-
+const QueryHistory = ({ userQueries }) => {
   const [modal, setModal] = useState(false);
 
   const onClick = () => {
@@ -43,7 +32,7 @@ const QueryHistory = ({
       <Modal isOpen={modal} toggle={() => onClick()} scrollable>
         <ModalHeader toggle={e => onClick(e)}>Query History</ModalHeader>
         <ModalBody>
-          {queries.map(({ _id, keyword, date, addedIn }) => (
+          {userQueries.map(({ _id, keyword, date, addedIn }) => (
             <ListGroup key={_id} style={{ marginTop: "5px" }}>
               <ListGroupItem>
                 <p>Keyword: {keyword}</p>
@@ -65,19 +54,7 @@ const QueryHistory = ({
   );
 };
 
-QueryHistory.propTypes = {
-  getQueriesByUserId: PropTypes.func.isRequired,
-  getSessionById: PropTypes.func.isRequired,
-  session: PropTypes.object.isRequired,
-  query: PropTypes.object.isRequired
-};
-
-const mapStateToProps = state => ({
-  session: state.sessionReducer,
-  query: state.queryReducer
-});
-
 export default connect(
-  mapStateToProps,
-  { getQueriesByUserId, getSessionById }
+  null,
+  {}
 )(QueryHistory);

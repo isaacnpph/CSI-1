@@ -6,19 +6,21 @@ import {
   SESSION_CREATED,
   GET_SESSIONS,
   SESSION_DELETED,
-  CLEAR_SESSION,
-  CLEAR_USER
+  CLEAR_USER,
+  QUERY_ERROR,
+  GET_QUERIES_BY_USER_ID
 } from "./types";
 
 // get current user
 export const getCurrentUser = () => async dispatch => {
   try {
     const res = await axios.get("/api/users/me");
-    dispatch({ type: CLEAR_SESSION });
     dispatch({
       type: GET_USER,
       payload: res.data
     });
+    dispatch(getSessions());
+    dispatch(getQueriesByUserId());
   } catch (err) {
     dispatch({
       type: ACCOUNT_ERROR,
@@ -144,6 +146,22 @@ export const updateDeleteSession = data => async dispatch => {
   } catch (err) {
     dispatch({
       type: ACCOUNT_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+// get queries by user id
+export const getQueriesByUserId = () => async dispatch => {
+  try {
+    const res = await axios.get("api/queries/user");
+    dispatch({
+      type: GET_QUERIES_BY_USER_ID,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: QUERY_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status }
     });
   }

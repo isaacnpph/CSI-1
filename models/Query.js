@@ -6,7 +6,8 @@ const QuerySchema = new mongoose.Schema({
     required: true
   },
   addedBy: {
-    type: String
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
   },
   date: {
     type: Date,

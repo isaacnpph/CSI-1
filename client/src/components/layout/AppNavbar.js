@@ -7,8 +7,7 @@ import { Dropdown, Item } from "semantic-ui-react";
 import Login from "../auth/Login";
 
 const AppNavbar = ({
-  authentication: { isAuthenticated, loading },
-  account: { user },
+  account: { isAuthenticated, loading, userDetails },
   logout
 }) => {
   function scroll(parm) {
@@ -19,7 +18,10 @@ const AppNavbar = ({
 
   const privateLinks = (
     <div className="right menu primary">
-      <Dropdown item text={user && user.firstName + " " + user.surname}>
+      <Dropdown
+        item
+        text={userDetails && userDetails.firstName + " " + userDetails.surname}
+      >
         <Dropdown.Menu>
           <Link className="item" to="/account">
             <i className="home icon" />
@@ -71,11 +73,10 @@ const AppNavbar = ({
 
 AppNavbar.propTypes = {
   logout: PropTypes.func.isRequired,
-  authentication: PropTypes.object.isRequired
+  account: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  authentication: state.authenticationReducer,
   account: state.accountReducer
 });
 

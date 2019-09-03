@@ -122,7 +122,7 @@ HomePage.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.authenticationReducer.isAuthenticated
+  isAuthenticated: state.accountReducer.isAuthenticated
 });
 
 export default connect(mapStateToProps)(HomePage);

@@ -16,7 +16,7 @@ const HighlightedQueries = ({
   addLike,
   removeLike,
   session,
-  authentication
+  account
 }) => {
   const highlightedSearches = (
     <Item.Group divided>
@@ -45,11 +45,11 @@ const HighlightedQueries = ({
                 icon="thumbs down outline"
                 onClick={() => removeLike(session._id, link._id)}
               />
-              {!authentication.loading &&
+              {!account.loading &&
                 link.user ===
-                  authentication.user.firstName +
+                  account.userDetails.firstName +
                     " " +
-                    authentication.user.surname && (
+                    account.userDetails.surname && (
                   <Button
                     icon="trash alternate outline"
                     onClick={() =>
@@ -93,11 +93,11 @@ HighlightedQueries.propTypes = {
   removeHighlightedSearch: PropTypes.func.isRequired,
   session: PropTypes.object.isRequired,
   highlightedQueries: PropTypes.array.isRequired,
-  authentication: PropTypes.object.isRequired
+  account: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  authentication: state.authenticationReducer
+  account: state.accountReducer
 });
 
 export default connect(

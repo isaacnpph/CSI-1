@@ -1,14 +1,13 @@
 import React, { Fragment, useEffect } from "react";
 import "semantic-ui-css/semantic.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-
 import "semantic-ui-react";
 import "./components/layout/AppNavbar";
 import AppNavbar from "./components/layout/AppNavbar";
 import HomePage from "./components/layout/HomePage";
 import EditPersonalDetails from "./components/account/EditPersonalDetails";
 import SessionList from "./components/account/SessionList";
-import AccountBoard from "./components/account/AccountBoard";
+import Dashboard from "./components/account/Dashboard";
 import SessionView from "./components/session/SessionView";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -36,7 +35,7 @@ const App = () => {
               <Route exact path="/" component={HomePage} />
               <Route exact path="#about" />
               <Route exact path="#contact" />
-              <PrivateRoute exact path="/account" component={AccountBoard} />
+              <PrivateRoute exact path="/account" component={Dashboard} />
               <PrivateRoute
                 exact
                 path="/edit-personal-details"

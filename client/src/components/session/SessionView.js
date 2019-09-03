@@ -29,9 +29,8 @@ import { getCurrentUser } from "../../actions/accountActions";
 
 const SessionView = ({
   getSessionById,
-  account: { user },
+  account: { userDetails, isAuthenticated },
   session: { session, loading, chatWindow },
-  authentication,
   openChat,
   closeChat,
   highlightSearchUpdate,
@@ -112,7 +111,7 @@ const SessionView = ({
     socket.emit("chat", {
       msg: e.currentTarget.parentNode.childNodes[0].value,
       session: session._id,
-      user_name: user.firstName + " " + user.surname
+      user_name: userDetails.firstName + " " + userDetails.surname
     });
     e.currentTarget.parentNode.childNodes[0].value = "";
   };
@@ -196,9 +195,9 @@ const SessionView = ({
             </Grid.Row>
           </Grid>
           <Segment textAlign="center">
-            {authentication.isAuthenticated &&
-              authentication.loading === false &&
-              authentication.user._id === session.author && (
+            {isAuthenticated &&
+              loading === false &&
+              userDetails._id === session.author && (
                 <span>
                   <InviteUserModal />
                   <RemoveUserModal />
@@ -221,14 +220,12 @@ SessionView.propTypes = {
   getSessionById: PropTypes.func.isRequired,
   openChat: PropTypes.func.isRequired,
   closeChat: PropTypes.func.isRequired,
-  session: PropTypes.object.isRequired,
-  authentication: PropTypes.object.isRequired
+  session: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   session: state.sessionReducer,
   account: state.accountReducer,
-  authentication: state.authenticationReducer,
   socketState: state.socketReducer
 });
 

@@ -7,7 +7,12 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
 
-const SessionList = ({ userSessions, deleteSession, removeUser, user }) => {
+const SessionList = ({
+  userSessions,
+  deleteSession,
+  removeUser,
+  userDetails
+}) => {
   const sessionList = (
     <Card.Group>
       {userSessions.map(session => (
@@ -28,7 +33,7 @@ const SessionList = ({ userSessions, deleteSession, removeUser, user }) => {
               >
                 Enter
               </Link>
-              {session.author === user._id ? (
+              {session.author === userDetails._id ? (
                 <Button
                   inverted
                   color="red"
@@ -40,7 +45,7 @@ const SessionList = ({ userSessions, deleteSession, removeUser, user }) => {
                 <Button
                   inverted
                   color="red"
-                  onClick={() => removeUser(user.email, session._id)}
+                  onClick={() => removeUser(userDetails.email, session._id)}
                 >
                   Leave
                 </Button>

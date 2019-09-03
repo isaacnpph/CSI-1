@@ -12,13 +12,14 @@ import {
   CHAT_OPEN,
   CHAT_CLOSED,
   GET_NEXTPAGE,
-  GET_PREVIOUSPAGE
+  GET_PREVIOUSPAGE,
+  CLEAR_SESSION
 } from "./types";
 
 export const getSessionById = sessionId => async dispatch => {
   try {
+    dispatch({ type: CLEAR_SESSION });
     const res = await axios.get(`/api/sessions/session-by-id/${sessionId}`);
-
     dispatch({
       type: GET_SESSION,
       payload: res.data
