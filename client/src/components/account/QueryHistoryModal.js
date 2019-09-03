@@ -37,7 +37,7 @@ const QueryHistory = ({ userQueries, userSessions }) => {
               <ListGroupItem>
                 <p>Keyword: {query.keyword}</p>
                 <p>
-                  Added on: <Moment format="DD/MM/YYYY">{query.date}</Moment>
+                  Date: <Moment format="DD/MM/YYYY">{query.date}</Moment>
                 </p>
                 {userSessions.map(
                   session =>
