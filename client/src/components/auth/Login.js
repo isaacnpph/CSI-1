@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import { Button, Icon } from "semantic-ui-react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { loginUser } from "../../actions/authenticationActions";
+import { loginUser } from "../../actions/accountActions";
 import { Redirect } from "react-router-dom";
 import {
   Modal,

@@ -7,18 +7,12 @@ import CreateSessionModal from "./CreateSessionModal";
 import QueryHistoryModal from "./QueryHistoryModal";
 import io from "socket.io-client";
 import { setInitialSocket } from "../../actions/socketActions";
-import { getQueriesByUserId } from "../../actions/accountActions";
-import {
-  getCurrentUser,
-  getSessions,
-  updateDeleteSession
-} from "../../actions/accountActions";
+import { getSessions, updateDeleteSession } from "../../actions/accountActions";
 import Spinner from "../layout/Spinner";
 
 let socket;
 
 const AccountBoard = ({
-  getCurrentUser,
   getSessions,
   updateDeleteSession,
   setInitialSocket,
@@ -26,10 +20,6 @@ const AccountBoard = ({
   socketState
 }) => {
   useEffect(() => {
-    if (loading) {
-      getCurrentUser();
-    }
-
     if (!socketState.socket_connected) {
       socket = io.connect("http://localhost:5000", {
         query: "user_id=" + localStorage.getItem("user_id")
@@ -47,7 +37,6 @@ const AccountBoard = ({
       updateDeleteSession(payload.deletedSession._id);
     });
   }, [
-    getCurrentUser,
     getSessions,
     setInitialSocket,
     socketState.socket,
@@ -99,7 +88,7 @@ const AccountBoard = ({
           </Grid.Column>
         </Grid.Row>
       </Grid>
-      <SessionList userSessions={sessions} userDetails={userDetails} />)
+      <SessionList userSessions={sessions} userDetails={userDetails} />
       {sessions.length === 0 && (
         <Message color="green">
           <Message.Header>No sessions.</Message.Header>
@@ -110,7 +99,6 @@ const AccountBoard = ({
 };
 
 AccountBoard.propTypes = {
-  getCurrentUser: PropTypes.func.isRequired,
   getSessions: PropTypes.func.isRequired
 };
 
@@ -122,7 +110,6 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    getCurrentUser,
     getSessions,
     updateDeleteSession,
     setInitialSocket

@@ -45,3 +45,4 @@ export const GET_QUERIES_BY_USER_ID = "GET_QUERIES_BY_USER_ID";
 //socket reducer types
 export const SOCKET_INIT = "SOCKET_INIT";
 export const GET_SOCKET = "GET_SOCKET";
+export const SOCKET_CLEARED = "SOCKET_CLEARED";

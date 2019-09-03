@@ -12,7 +12,7 @@ import SessionView from "./components/session/SessionView";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
-import { loadUser } from "./actions/authenticationActions";
+import { loadUser } from "./actions/accountActions";
 import setAuthToken from "./utilities/setAuthToken";
 import PrivateRoute from "./components/routing/PrivateRoute";
 

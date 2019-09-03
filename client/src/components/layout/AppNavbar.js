@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { logout } from "../../actions/authenticationActions";
+import { logout } from "../../actions/accountActions";
 import { Dropdown, Item } from "semantic-ui-react";
 import Login from "../auth/Login";
 

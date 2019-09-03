@@ -20,11 +20,12 @@ import {
 
 const initialState = {
   token: localStorage.getItem("token"),
-  isAuthenticated: null,
+  isAuthenticated: false,
   loading: true,
   userDetails: null,
   sessions: [],
-  queries: []
+  queries: [],
+  error: {}
 };
 
 export default function(state = initialState, action) {
@@ -61,8 +62,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         ...payload,
-        isAuthenticated: true,
-        loading: false
+        isAuthenticated: true
       };
     case USER_NOT_REGISTERED:
     case AUTHORISATION_ERROR:

@@ -1,4 +1,5 @@
 import axios from "axios";
+import setAuthToken from "../utilities/setAuthToken";
 import {
   GET_USER,
   ACCOUNT_ERROR,
@@ -6,10 +7,38 @@ import {
   SESSION_CREATED,
   GET_SESSIONS,
   SESSION_DELETED,
-  CLEAR_USER,
   QUERY_ERROR,
-  GET_QUERIES_BY_USER_ID
+  GET_QUERIES_BY_USER_ID,
+  USER_REGISTERED,
+  USER_NOT_REGISTERED,
+  USER_LOADED,
+  AUTHORISATION_ERROR,
+  LOGIN_SUCCESSFUL,
+  LOGIN_UNSUCCESSFUL,
+  LOGOUT,
+  CLEAR_USER,
+  CLEAR_SESSION,
+  CLEAR_QUERY
 } from "./types";
+
+// Load User
+export const loadUser = () => async dispatch => {
+  if (localStorage.token) {
+    setAuthToken(localStorage.token);
+  }
+  try {
+    const res = await axios.get("/api/auth");
+    dispatch({
+      type: USER_LOADED,
+      payload: res.data
+    });
+    dispatch(getCurrentUser());
+  } catch (err) {
+    dispatch({
+      type: AUTHORISATION_ERROR
+    });
+  }
+};
 
 // get current user
 export const getCurrentUser = () => async dispatch => {
@@ -19,12 +48,36 @@ export const getCurrentUser = () => async dispatch => {
       type: GET_USER,
       payload: res.data
     });
-    dispatch(getSessions());
     dispatch(getQueriesByUserId());
+    dispatch(getSessions());
   } catch (err) {
     dispatch({
       type: ACCOUNT_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+// login user
+export const loginUser = (email, password) => async dispatch => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  const body = JSON.stringify({ email, password });
+
+  try {
+    const res = await axios.post("/api/auth", body, config);
+    dispatch({
+      type: LOGIN_SUCCESSFUL,
+      payload: res.data
+    });
+    dispatch(loadUser());
+  } catch (err) {
+    dispatch({
+      type: LOGIN_UNSUCCESSFUL
     });
   }
 };
@@ -37,13 +90,11 @@ export const editPersonalDetails = (formData, history) => async dispatch => {
         "Content-type": "application/json"
       }
     };
-
     const res = await axios.put("/api/users/edit", formData, config);
     dispatch({
       type: GET_USER,
       payload: res.data
     });
-
     history.push("/account");
   } catch (err) {}
 };
@@ -165,4 +216,42 @@ export const getQueriesByUserId = () => async dispatch => {
       payload: { msg: err.response.statusText, status: err.response.status }
     });
   }
+};
+
+// user registration
+export const registerUser = ({
+  firstName,
+  surname,
+  email,
+  password
+}) => async dispatch => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  const body = JSON.stringify({ firstName, surname, email, password });
+
+  try {
+    const res = await axios.post("/api/users", body, config);
+    dispatch({
+      type: USER_REGISTERED,
+      payload: res.data
+    });
+    dispatch(loadUser());
+  } catch (err) {
+    dispatch({
+      type: USER_NOT_REGISTERED
+    });
+  }
+};
+
+// logout
+export const logout = () => dispatch => {
+  // dispatch({ type: SOCKET_CLEARED });
+  dispatch({ type: CLEAR_SESSION });
+  dispatch({ type: CLEAR_QUERY });
+  dispatch({ type: LOGOUT });
+  dispatch({ type: CLEAR_USER });
 };

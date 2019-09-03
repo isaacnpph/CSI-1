@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { registerUser } from "../../actions/authenticationActions";
+import { registerUser } from "../../actions/accountActions";
 import { Redirect } from "react-router-dom";
 import { Button } from "semantic-ui-react";
 import {
