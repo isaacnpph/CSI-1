@@ -8,7 +8,7 @@ const SearchResults = ({ highlightSearch, session: { session, results } }) => {
   const googleResults = (
     <Item.Group divided>
       {results.map(result => (
-        <Item key={result.title}>
+        <Item key={result.cacheId}>
           <Item.Content>
             <Item.Header>{result.title}</Item.Header>
             <Item.Meta>

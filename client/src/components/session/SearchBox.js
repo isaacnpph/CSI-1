@@ -24,8 +24,8 @@ const SearchBox = ({
 
   const onClick = e => {
     e.preventDefault();
-    addQuery(query, session._id);
     googleSearchApi(query, page);
+    addQuery(query, session._id);
   };
 
   return (
