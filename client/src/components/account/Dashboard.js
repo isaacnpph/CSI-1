@@ -81,7 +81,10 @@ const AccountBoard = ({
               <Card.Content>
                 <Card.Description textAlign="center">
                   <CreateSessionModal />
-                  <QueryHistoryModal userQueries={queries} />
+                  <QueryHistoryModal
+                    userQueries={queries}
+                    userSessions={sessions}
+                  />
                 </Card.Description>
               </Card.Content>
             </Card>
