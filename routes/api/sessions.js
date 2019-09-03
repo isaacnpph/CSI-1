@@ -532,6 +532,58 @@ router.delete(
   }
 );
 
+// @route  POST api/sessions
+// @desc   Add a query
+// @access Private
+router.post(
+  "/:session_id",
+  [
+    auth,
+    [
+      check("keyword", "keyword is required")
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const session = await Session.findById(req.params.session_id);
+      const user = await User.findById(req.user.id);
+      const newQuery = new Query({
+        addedIn: session.id,
+        keyword: req.body.keyword,
+        addedBy: user._id
+      });
+
+      const query = await newQuery.save();
+      res.json(query);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server error");
+    }
+  }
+);
+
+// @route  GET api/sessions/session_queries/:session_id
+// @desc   Get queries by session id
+// @access Private
+router.get("/session_queries/:session_id", auth, async (req, res) => {
+  try {
+    const queries = await Query.find({ addedIn: req.params.session_id }).sort({
+      date: -1
+    });
+    res.json(queries);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
 // @route  GET api/sessions/googleApi/:query/:page
 // @desc   Fetch results from Google Search API
 // @access Private

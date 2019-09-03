@@ -12,7 +12,6 @@ const AppNavbar = ({
 }) => {
   function scroll(parm) {
     let elmnt = document.getElementById(parm);
-    console.log(parm);
     elmnt.scrollIntoView();
   }
 

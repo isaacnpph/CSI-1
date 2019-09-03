@@ -13,7 +13,10 @@ import {
   CHAT_CLOSED,
   GET_NEXTPAGE,
   GET_PREVIOUSPAGE,
-  CLEAR_SESSION
+  CLEAR_SESSION,
+  GET_QUERIES_BY_SESSION_ID,
+  QUERY_ADDED,
+  QUERY_ERROR
 } from "./types";
 
 export const getSessionById = sessionId => async dispatch => {
@@ -378,5 +381,37 @@ export const googleSearchApi = (query, page) => async dispatch => {
     //   type: SESSION_ERROR,
     //   payload: { msg: err.response.statusText, status: err.response.status }
     // });
+  }
+};
+
+// add a query
+export const addQuery = (keyword, sessionId) => async dispatch => {
+  try {
+    const res = await axios.post(`/api/sessions/${sessionId}`, { keyword });
+    dispatch({
+      type: QUERY_ADDED,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: QUERY_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+// get queries by session id
+export const getQueriesBySessionId = sessionId => async dispatch => {
+  try {
+    const res = await axios.get(`/api/sessions/session_queries/${sessionId}`);
+    dispatch({
+      type: GET_QUERIES_BY_SESSION_ID,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: QUERY_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
   }
 };

@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { googleSearchApi } from "../../actions/sessionActions";
 import { connect } from "react-redux";
-import { addQuery } from "../../actions/queryActions";
+import { addQuery } from "../../actions/sessionActions";
 import PropTypes from "prop-types";
 import SearchResults from "./SearchResults";
 import { Container, Button, Input, Icon } from "semantic-ui-react";

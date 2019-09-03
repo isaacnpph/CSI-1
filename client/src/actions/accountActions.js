@@ -17,8 +17,7 @@ import {
   LOGIN_UNSUCCESSFUL,
   LOGOUT,
   CLEAR_USER,
-  CLEAR_SESSION,
-  CLEAR_QUERY
+  CLEAR_SESSION
 } from "./types";
 
 // Load User
@@ -78,6 +77,35 @@ export const loginUser = (email, password) => async dispatch => {
   } catch (err) {
     dispatch({
       type: LOGIN_UNSUCCESSFUL
+    });
+  }
+};
+
+// user registration
+export const registerUser = ({
+  firstName,
+  surname,
+  email,
+  password
+}) => async dispatch => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  const body = JSON.stringify({ firstName, surname, email, password });
+
+  try {
+    const res = await axios.post("/api/users", body, config);
+    dispatch({
+      type: USER_REGISTERED,
+      payload: res.data
+    });
+    dispatch(loadUser());
+  } catch (err) {
+    dispatch({
+      type: USER_NOT_REGISTERED
     });
   }
 };
@@ -205,7 +233,7 @@ export const updateDeleteSession = data => async dispatch => {
 // get queries by user id
 export const getQueriesByUserId = () => async dispatch => {
   try {
-    const res = await axios.get("api/queries/user");
+    const res = await axios.get("api/users/user_queries");
     dispatch({
       type: GET_QUERIES_BY_USER_ID,
       payload: res.data
@@ -218,40 +246,10 @@ export const getQueriesByUserId = () => async dispatch => {
   }
 };
 
-// user registration
-export const registerUser = ({
-  firstName,
-  surname,
-  email,
-  password
-}) => async dispatch => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  };
-
-  const body = JSON.stringify({ firstName, surname, email, password });
-
-  try {
-    const res = await axios.post("/api/users", body, config);
-    dispatch({
-      type: USER_REGISTERED,
-      payload: res.data
-    });
-    dispatch(loadUser());
-  } catch (err) {
-    dispatch({
-      type: USER_NOT_REGISTERED
-    });
-  }
-};
-
 // logout
 export const logout = () => dispatch => {
   // dispatch({ type: SOCKET_CLEARED });
   dispatch({ type: CLEAR_SESSION });
-  dispatch({ type: CLEAR_QUERY });
-  dispatch({ type: LOGOUT });
   dispatch({ type: CLEAR_USER });
+  dispatch({ type: LOGOUT });
 };

@@ -11,8 +11,6 @@ import {
 import SearchBox from "./SearchBox";
 import { Segment, Grid, Header, Button, Input } from "semantic-ui-react";
 import HighlightedQueries from "./HighlightedQueries";
-// import QueryHistory from "./QueryHistory";
-// import Chat from "./Chat";
 import InviteUserModal from "./InviteUserModal";
 import RemoveUserModal from "./RemoveUserModal";
 import {

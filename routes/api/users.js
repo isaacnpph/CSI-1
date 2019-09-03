@@ -146,6 +146,19 @@ router.get("/me", auth, async (req, res) => {
   }
 });
 
+// @route  GET api/users/userQueries
+// @desc   Get queries by user ID
+// @access Private
+router.get("/user_queries", auth, async (req, res) => {
+  try {
+    const queries = await Query.find({ addedBy: req.user.id });
+    res.json(queries);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
 //  @route  DELETE api/users/
 //  @desc   Delete user
 //  @access Private

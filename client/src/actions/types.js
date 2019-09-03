@@ -37,7 +37,6 @@ export const QUERY_ADDED = "QUERY_ADDED";
 export const QUERY_DELETED = "QUERY_DELETED";
 export const GET_QUERIES_BY_SESSION_ID = "GET_QUERIES_BY_SESSION_ID";
 export const GET_QUERIES_BY_USER_ID = "GET_QUERIES_BY_USER_ID";
-export const CLEAR_QUERY = "CLEAR_QUERY";
 export const QUERY_ERROR = "QUERY_ERROR";
 
 //socket reducer types
