@@ -12,5 +12,5 @@ const store = createStore(
   initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 );
-// store.subscribe(() => console.log("store", store.getState()));
+
 export default store;

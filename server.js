@@ -1,5 +1,4 @@
 const app = require("express")();
-const path = require("path");
 const connectDB = require("./config/db");
 const cors = require("cors");
 const server = require("http").createServer(app);
@@ -34,16 +33,6 @@ app.use(cors());
 app.use("/api/sessions", require("./routes/api/sessions"));
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
-
-// // server static assets if in production
-// if (process.env.NODE_ENV === "production") {
-
-// set static folder
-// app.use(express.static(path.join(__dirname, "public")));
-
-// app.get("*", (req, res) => {
-//   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-// });
 
 const port = process.env.PORT || 5000;
 
