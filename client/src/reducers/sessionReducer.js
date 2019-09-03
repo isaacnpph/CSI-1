@@ -65,16 +65,6 @@ export default function(state = initialState, action) {
         ...state,
         session: { ...state.session, invitedUsers: payload }
       };
-    case CLEAR_SESSION:
-      return {
-        ...state,
-        session: null,
-        nextPage: null,
-        previousPage: null,
-        results: [],
-        loading: true,
-        chatWindow: false
-      };
     case CHAT_OPEN:
       return {
         ...state,
@@ -83,6 +73,16 @@ export default function(state = initialState, action) {
     case CHAT_CLOSED:
       return {
         ...state,
+        chatWindow: false
+      };
+    case CLEAR_SESSION:
+      return {
+        ...state,
+        session: null,
+        nextPage: null,
+        previousPage: null,
+        results: [],
+        loading: true,
         chatWindow: false
       };
     case SESSION_ERROR:

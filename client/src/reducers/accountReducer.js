@@ -31,12 +31,6 @@ const initialState = {
 export default function(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
-    case QUERY_ADDED:
-      return {
-        ...state,
-        queries: [payload, ...state.queries],
-        loading: false
-      };
     case USER_LOADED:
       return {
         ...state,
@@ -49,12 +43,6 @@ export default function(state = initialState, action) {
         userDetails: payload,
         loading: false
       };
-    case GET_QUERIES_BY_USER_ID:
-      return {
-        ...state,
-        queries: payload,
-        loading: false
-      };
     case USER_REGISTERED:
     case LOGIN_SUCCESSFUL:
       localStorage.setItem("token", payload.token);
@@ -63,6 +51,36 @@ export default function(state = initialState, action) {
         ...state,
         ...payload,
         isAuthenticated: true
+      };
+    case GET_SESSIONS:
+      return {
+        ...state,
+        sessions: payload,
+        loading: false
+      };
+    case GET_QUERIES_BY_USER_ID:
+      return {
+        ...state,
+        queries: payload,
+        loading: false
+      };
+    case SESSION_CREATED:
+      return {
+        ...state,
+        sessions: [payload, ...state.sessions],
+        loading: false
+      };
+    case USER_REMOVED_FROM_SESSION:
+    case SESSION_DELETED:
+      return {
+        ...state,
+        sessions: state.sessions.filter(sessions => sessions._id !== payload)
+      };
+    case QUERY_ADDED:
+      return {
+        ...state,
+        queries: [payload, ...state.queries],
+        loading: false
       };
     case USER_NOT_REGISTERED:
     case AUTHORISATION_ERROR:
@@ -80,36 +98,18 @@ export default function(state = initialState, action) {
         sessions: [],
         queries: []
       };
-    case SESSION_CREATED:
-      return {
-        ...state,
-        sessions: [payload, ...state.sessions],
-        loading: false
-      };
-    case GET_SESSIONS:
-      return {
-        ...state,
-        sessions: payload,
-        loading: false
-      };
-    case USER_REMOVED_FROM_SESSION:
-    case SESSION_DELETED:
-      return {
-        ...state,
-        sessions: state.sessions.filter(sessions => sessions._id !== payload)
-      };
-    case ACCOUNT_ERROR:
-      return {
-        ...state,
-        error: payload,
-        loading: false
-      };
     case CLEAR_USER:
       return {
         ...state,
         userDetails: null,
         sessions: [],
         queries: [],
+        loading: false
+      };
+    case ACCOUNT_ERROR:
+      return {
+        ...state,
+        error: payload,
         loading: false
       };
     default:
